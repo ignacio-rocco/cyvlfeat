@@ -126,7 +126,7 @@ def sift(image, n_octaves=None, n_levels=3,  first_octave=0,  peak_thresh=0,
     
     if compute_descriptor and frames is None: # result is tuple (frames,desc)
          # swap X and Y back from [Y,X,S,TH] to [X,Y,S,TH]
-         result[0]=result[0][:,[1,0,2,3]]
+         result=(result[0][:,[1,0,2,3]],result[1])
     elif not compute_descriptor: # result is frames
          # swap X and Y back from [Y,X,S,TH] to [X,Y,S,TH]
          result = result[:,[1,0,2,3]]

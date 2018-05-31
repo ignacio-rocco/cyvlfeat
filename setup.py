@@ -18,15 +18,6 @@ IS_CONDA = os.environ.get('CONDA_BUILD', False)
 INCLUDE_DIRS = [pkg_resources.resource_filename('numpy', 'core/include')]
 LIBRARY_DIRS = []
 
-if 'VLFEAT_DIR' in os.environ.keys(): 
-    VLFEAT_DIR = os.environ['VLFEAT_DIR']
-    INCLUDE_DIRS.append(VLFEAT_DIR)
-    if IS_LINUX:
-        LIBRARY_DIRS.append(op.join(VLFEAT_DIR,'bin','glnxa64'))
-    if IS_OSX:
-        LIBRARY_DIRS.append(op.join(VLFEAT_DIR,'bin','maci64'))
-    if IS_WIN:
-        LIBRARY_DIRS.append(op.join(VLFEAT_DIR,'bin','win64'))
 
 def walk_for_package_data(ext_pattern):
     paths = []

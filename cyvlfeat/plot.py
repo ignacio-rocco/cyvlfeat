@@ -3,7 +3,7 @@ from pylab import *
 
 eps = 1e-9
 
-def plotframe(frames, color='#00ff00', linewidth=2):
+def plotframes(frames, color='#00ff00', linewidth=1):
 	# VL_PLOTFRAME  Plot feature frame
 	#  VL_PLOTFRAME(FRAME) plots the frames FRAME.  Frames are attributed
 	#  image regions (as, for example, extracted by a feature detector). A
@@ -60,7 +60,10 @@ def plotframe(frames, color='#00ff00', linewidth=2):
 	# if just a vector, make sure it is column
 	if min(frames.shape) == 1:
 		frames = frames[:]
-	  
+	
+	if frames.shape[0]>6 and frames.shape[1]<=6: # transpose
+		frames=transpose(frames,(1,0))
+
 	[D, K] = frames.shape
 	zero_dimensional = D == 2
 	
