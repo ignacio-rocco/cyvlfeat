@@ -351,7 +351,7 @@ cpdef cy_sift(float[:, ::1] data, int n_octaves,
             return np.asarray(out_frames), np.asarray(out_descriptors)
         else:
             return np.asarray(out_frames), np.asarray(out_descriptors).astype(np.uint8)
-    if compute_descriptor not user_specified_frames: # return desc
+    if compute_descriptor and user_specified_frames: # return desc
         if float_descriptors:
             return np.asarray(out_descriptors)
         else:
