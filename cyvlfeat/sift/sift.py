@@ -52,7 +52,7 @@ def sift(image, n_octaves=None, n_levels=3,  first_octave=0,  peak_thresh=0,
     frames : `[F, 4]` `float32` `ndarray`, optional
         If specified, set the frames to use (bypass the detector). If frames are
         not passed in order of increasing scale, they are re-orderded. A frame
-        is a vector of length 4 ``[Y, X, S, TH]``, representing a disk of center
+        is a vector of length 4 ``[X, Y, S, TH]``, representing a disk of center
         f[:2], scale f[2] and orientation f[3].
     force_orientations : `bool`, optional
         If ``True``, compute the orientations of the frames, overriding the
