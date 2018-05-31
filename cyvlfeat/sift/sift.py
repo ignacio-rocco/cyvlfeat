@@ -10,7 +10,7 @@ def sift(image, n_octaves=None, n_levels=3,  first_octave=0,  peak_thresh=0,
     Extracts a set of SIFT features from ``image``. ``image`` must be
     ``float32`` and greyscale (either a single channel as the last axis, or no
     channel). Each column of ``frames`` is a feature frame and has the format
-    ``[Y, X, S, TH]``, where ``(Y, X)`` is the floating point center of the
+    ``[X, Y, S, TH]``, where ``(X, Y)`` is the floating point center of the
     keypoint, ``S`` is the scale and ``TH`` is the orientation (in radians).
 
     If ``compute_descriptors=True``, computes the SIFT descriptors as well. Each
@@ -87,10 +87,12 @@ def sift(image, n_octaves=None, n_levels=3,  first_octave=0,  peak_thresh=0,
         raise ValueError('Only 2D arrays are supported')
 
     if frames is not None:
-        if frames.ndim != 2 or frames.shape[-1] != 4:
+        if frames.ndim != 2 or frames.shape[0] != 4:
             raise ValueError('Frames should be a 2D array of size '
                              '(n_keypoints, 4)')
         frames = np.require(frames, dtype=np.float32, requirements='C')
+        # swap X and Y coordinates as cy_sift expects [Y,X,S,TH] frames
+        frames = frames[:,[1,0,2,3]]
 
     # Validate all the parameters
     if n_octaves is not None and n_octaves < 0:
@@ -121,5 +123,13 @@ def sift(image, n_octaves=None, n_levels=3,  first_octave=0,  peak_thresh=0,
                      window_size, frames, force_orientations,
                      float_descriptors, compute_descriptor,
                      verbose)
+    
+    if compute_descriptor and frames is None: # result is tuple (frames,desc)
+         # swap X and Y back from [Y,X,S,TH] to [X,Y,S,TH]
+         result[0]=result[0][:,[1,0,2,3]]
+    elif not compute_descriptor: # result is frames
+         # swap X and Y back from [Y,X,S,TH] to [X,Y,S,TH]
+         result = result[:,[1,0,2,3]]
+         
     # May be a tuple or a single return of only the calculated frames
     return result
