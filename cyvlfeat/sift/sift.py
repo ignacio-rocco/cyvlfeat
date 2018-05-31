@@ -5,7 +5,7 @@ from .cysift import cy_sift
 def sift(image, n_octaves=None, n_levels=3,  first_octave=0,  peak_thresh=0,
          edge_thresh=10, norm_thresh=None,  magnification=3, window_size=2,
          frames=None, force_orientations=False, float_descriptors=False,
-         compute_descriptor=False, verbose=False):
+         compute_descriptor=True, verbose=False):
     r"""
     Extracts a set of SIFT features from ``image``. ``image`` must be
     ``float32`` and greyscale (either a single channel as the last axis, or no
