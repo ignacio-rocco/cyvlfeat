@@ -346,10 +346,15 @@ cpdef cy_sift(float[:, ::1] data, int n_octaves,
         out_frames = np.resize(out_frames, (total_keypoints, 4))
         out_descriptors = np.resize(out_descriptors, (total_keypoints, 128))
 
-    if compute_descriptor:
+    if compute_descriptor and not user_specified_frames: # return frames,desc
         if float_descriptors:
             return np.asarray(out_frames), np.asarray(out_descriptors)
         else:
             return np.asarray(out_frames), np.asarray(out_descriptors).astype(np.uint8)
-    else:
+    if compute_descriptor not user_specified_frames: # return desc
+        if float_descriptors:
+            return np.asarray(out_descriptors)
+        else:
+            return np.asarray(out_descriptors).astype(np.uint8)
+    else: # return frames
         return np.asarray(out_frames)
